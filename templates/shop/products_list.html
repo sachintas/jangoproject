@@ -1,0 +1,30 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block content %} {% for product in products %}
+<div class="col-md-4 mb-4">
+  <a href="{% url 'singleProduct' pk=product.pk %}">
+    <div class="card h-100">
+      {% if product.thumbnail %}
+      <img
+        src="{{ product.thumbnail.url }}"
+        class="card-img-top"
+        alt="{{ product.name }}"
+      />
+      {% else %}
+      <img
+        src="{% static 'img/product-placeholder.png' %}"
+        class="card-img-top"
+        alt="{{ product.name }}"
+      />
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+        <p class="card-text"><strong>${{ product.price }}</strong></p>
+      </div>
+    </div>
+  </a>
+</div>
+{% empty %}
+<p>No products available.</p>
+{% endfor %} {% endblock %}
